@@ -4,12 +4,10 @@ const request = require('request');
 const bodyParser = require('body-parser');
 
 const loadMashup = require('./mashup');
+const loadTumblr = require('./tumblr');
 
 const clientId = process.env.SLACK_CLIENT_ID;
 const clientSecret = process.env.SLACK_CLIENT_SECRET;
-
-// const tumblrConsumerKey = process.env.TUMBLR_CONSUMER_KEY;
-// const tumblrSecretKey = process.env.TUMBLR_SECRET_KEY;
 
 const OH_NO_COLOR = "#fe7db5";
 
@@ -59,6 +57,7 @@ app.post('/ohno', (req, res) => {
   const { text } = req.body;
   res.set('Content-Type', 'application/json');
 
+  // retrieve a mashup comic from the Glitch app
   if (text === 'mashup') {
     // TODO: We may have to send a delayed response if loading mashups takes longer than 3000ms. https://api.slack.com/slash-commands#responding_response_url
     loadMashup((err, mashupData) => {
@@ -68,7 +67,7 @@ app.post('/ohno', (req, res) => {
       }
       console.log("loaded mashup data");
 
-      const responseData = {
+      const slackRes = {
         response_type: "in_channel",
         attachments: mashupData.imageURLs.map((image_url, i) => (
           i === 0 ?
@@ -84,13 +83,32 @@ app.post('/ohno', (req, res) => {
             }
           ))
       };
-      res.send(responseData);
+      res.send(slackRes);
     });
     return;
   }
 
+  // retrieve a random comic from the tumblr blog
   if (text === 'comic') {
-    // retrieve a random comic from the tumblr blog
+    // TODO: We may have to send a delayed response if loading mashups takes longer than 3000ms. https://api.slack.com/slash-commands#responding_response_url
+    loadTumblr((err, image_url) => {
+      if (err) {
+        console.error("oh no... an error happened when loading the tumblr comic");
+        return;
+      }
+      console.log("loaded tumblr data");
+      console.log(`comic url: ${image_url}`);
+
+      const slackRes = {
+        response_type: "in_channel",
+        attachments: [{
+          fallback: "oh no... could not load the comic",
+          image_url,
+        }]
+      };
+      res.send(slackRes);
+    });
+    return;
   }
 
   // oh no...
@@ -99,8 +117,8 @@ app.post('/ohno', (req, res) => {
       response_type: "in_channel",
       attachments: [
         {
-          fallback: "oh no...",
           color: OH_NO_COLOR,
+          fallback: "oh no...",
           image_url: "https://api.tumblr.com/v2/blog/webcomicname/avatar/512",
           // image_url: "https://1c607c87.ngrok.io/ohno_512.png",
         }

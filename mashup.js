@@ -22,7 +22,7 @@ const getPanelImageURL = (stripNumber, panelIndex) => `${IMAGE_BASE}/strip_${str
 // ['104_title', '180_0', '104_1', '146_2']
 const getSavedURL = (imageKeys) => `${MASHUP_URL}/?images=${imageKeys.join(',')}`;
 
-const loadMashup = (callback) => {
+const loadMashup = callback => {
   request({
     url: GOOD_STRIP_URL,
     method: 'GET',
