@@ -1,4 +1,3 @@
-require('dotenv').config();
 const request = require('request');
 
 const api_key = process.env.TUMBLR_CONSUMER_KEY;
