@@ -148,8 +148,7 @@ app.post("/ohno", (req, res) => {
         {
           color: OH_NO_COLOR,
           fallback: "oh no...",
-          image_url: "https://api.tumblr.com/v2/blog/webcomicname/avatar/512",
-          // image_url: "https://1c607c87.ngrok.io/ohno_512.png",
+          image_url: "https://api.tumblr.com/v2/blog/webcomicname/avatar/512"
         }
       ]
     }
