@@ -23,3 +23,9 @@ Read the post on how this was made: <>
 Of course to https://twitter.com/dorrismccomics for creating the blob
 
 And to [@caseyf](https://github.com/caseyf) for doing all the hard work when creating [the webcomicname mashup app](https://glitch.com/~webcomicname-mashup)
+
+### Feedback
+
+Let me know what you think, raise PRs or issues.
+
+All the noticiations are in_channel right now and the mashup takes up a lot of slack real-estate when it renders, probably this can be improved.
