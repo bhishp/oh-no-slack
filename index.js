@@ -42,13 +42,24 @@ app.get("/oauth", (req, res) => {
       client_secret: clientSecret
     },
     method: "GET",
-  }, (err, res, body) => {
-    if (err) {
+  }, (accessErr, accessRes, accessBody) => {
+    if (accessErr) {
+      res.status(500);
+      res.send({ "Error": "oh no... there was an error authorizing you" });
       console.error("oh no... there was an error calling slack's oauth.access");
-      console.error(err);
+      console.error(accessErr);
       return;
     }
-    res.json(body);
+    const { ok, error } = JSON.parse(accessBody);
+    if (!ok) {
+      res.status(500);
+      res.send({ "Error": "oh no... there was an error authorizing you" });
+      console.error("oh no... there was an error calling slack's oauth.access");
+      console.error(error);
+      return;
+    }
+    console.log("oauth.access success");
+    res.redirect("https://github.com/bhishp/oh-no-slack");
   });
 });
 
