@@ -9,6 +9,7 @@ const clientId = process.env.SLACK_CLIENT_ID;
 const clientSecret = process.env.SLACK_CLIENT_SECRET;
 
 const OH_NO_COLOR = "#fe7db5";
+const GIT_URL = "https://github.com/bhishp/oh-no-slack";
 
 const app = express();
 app.use(express.static("public"));
@@ -22,7 +23,7 @@ app.listen(PORT, () => {
   console.log("oh no... we're on port " + PORT);
 });
 
-app.get("/", (req, res) => res.send("oh no... this is a slack app, don't access it by the web browser"));
+app.get("/", (req, res) => res.redirect(GIT_URL));
 
 // Handling Slack oAuth process
 app.get("/oauth", (req, res) => {
@@ -59,7 +60,7 @@ app.get("/oauth", (req, res) => {
       return;
     }
     console.log("oauth.access success");
-    res.redirect("https://github.com/bhishp/oh-no-slack");
+    res.redirect(GIT_URL);
   });
 });
 
