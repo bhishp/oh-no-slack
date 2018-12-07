@@ -56,8 +56,12 @@ const loadPost = callback => {
           posts
         }
       } = data;
-      const comicUrl = posts[Math.floor(Math.random() * POST_LIMIT)].photos[0].original_size.url;
-      callback(null, comicUrl);
+      const post = posts[Math.floor(Math.random() * POST_LIMIT)];
+      const comicUrl = post.photos[0].original_size.url;
+      callback(null, {
+        postUrl: post.post_url,
+        comicUrl
+      });
     });
 
   });

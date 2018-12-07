@@ -114,16 +114,22 @@ app.post("/ohno", (req, res) => {
     // send initial response
     res.send();
 
-    loadTumblr((err, image_url) => {
-      if (err) {
+    loadTumblr((err, post) => {
+      if (err || !post) {
         console.error("oh no... an error happened when loading the tumblr comic");
         return;
       }
       console.log("loaded tumblr data");
+      const {
+        postUrl,
+        comicUrl: image_url
+      } = post;
 
       const slackRes = {
         response_type: "in_channel",
         attachments: [{
+          title: postUrl,
+          title_link: postUrl,
           fallback: "oh no... could not load the comic",
           image_url,
         }]
