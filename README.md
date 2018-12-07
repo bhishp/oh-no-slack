@@ -20,7 +20,7 @@ Read the post on how to install and how it was made here: [oh-no - a slackapp](h
 
 ### Big thanks
 
-Of course to https://twitter.com/dorrismccomics for creating the blob
+Of course to https://twitter.com/dorrismccomics for creating the blob we all know and love
 
 And to [@caseyf](https://github.com/caseyf) for doing all the hard work when creating [the webcomicname mashup app](https://glitch.com/~webcomicname-mashup)
 
